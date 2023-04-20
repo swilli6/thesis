@@ -20,8 +20,8 @@ train = df.values[(int(df.shape[0]*.3)):]
 
 # Convert list back to a DataFrame
 test_set = pd.DataFrame(test)
-test_set.to_excel('test_AB.xlsx')
+train_set = pd.DataFrame(train)
 
 # Write to an Excel file
-train_set = pd.DataFrame(train)
+test_set.to_excel('test_AB.xlsx')
 train_set.to_excel('train_AB.xlsx')
