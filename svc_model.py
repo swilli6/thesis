@@ -141,7 +141,7 @@ def plot_coefficients(classifier, feature_names, top_features=20):
    plt.xticks(np.arange(1, 1 + 2 * top_features), feature_names[top_coefficients], rotation=60, ha='right')
    plt.show()
 
-plotinput = input('Do you wish to plot the top 15 coefficients (most salient words)? Y/N ')
+plotinput = input('Do you wish to plot the top 20 coefficients (most salient words)? Y/N ')
 if plotinput == 'Y' or plotinput == 'y':
    plot_coefficients(svc_model, vectorizer.get_feature_names_out())
 else:
