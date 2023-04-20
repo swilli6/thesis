@@ -12,7 +12,7 @@ from nltk.tokenize import TweetTokenizer
 tk = TweetTokenizer()
 
 # Read Excel file
-df = pd.read_excel("preli_set.xlsx", sheet_name=0)
+df = pd.read_excel("preli_set_AB.xlsx", sheet_name=0)
 
 # Convert DataFrame to list of lists
 data = df.values.tolist()
