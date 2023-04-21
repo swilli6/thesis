@@ -21,9 +21,9 @@ import gensim
 import numpy as np
 
 # Import training and test data from Excel, extract strings into a separate list
-all_strings = pd.read_excel("preli_set_A.xlsx", sheet_name=0)
-train_df = pd.read_excel("train_A.xlsx", sheet_name=0)
-test_df = pd.read_excel("test_A.xlsx", sheet_name=0)
+all_strings = pd.read_excel("preli_set_AB.xlsx", sheet_name=0)
+train_df = pd.read_excel("train_AB.xlsx", sheet_name=0)
+test_df = pd.read_excel("test_AB.xlsx", sheet_name=0)
 train_strings = list(train_df[2]) 
 test_strings = list(test_df[2]) 
 
