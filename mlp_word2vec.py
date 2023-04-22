@@ -31,7 +31,8 @@ test_strings = list(test_df[2])
 corpus = all_strings['raw_msg'].values
 
 # Create the vectorizer
-vectorizer = CountVectorizer(stop_words='english')
+vectorizer = CountVectorizer(stop_words='english') # Toggle with the vectorizer below to include stop words
+# vectorizer = CountVectorizer()
  
 # Transform the corpus data into vectors
 X = vectorizer.fit_transform(corpus)
