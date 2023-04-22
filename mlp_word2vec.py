@@ -3,7 +3,7 @@
 # Description: This script trains a deep neural network for binary classification
 #              on text data and evaluates performance using accuracy, precision,
 #              recall, and F1 score.
-# Input: preli_set_AB.xlsx, train_AB.xlsx and test_AB.xlsx (or preli_set_A.xlsx, train_A.xlsx and test_A.xlsx)
+# Input: train_AB.xlsx and test_AB.xlsx (or train_A.xlsx and test_A.xlsx)
 # Output: performance evaluation metrics and a confusion matrix
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -21,21 +21,17 @@ import gensim
 import numpy as np
 
 # Import training and test data from Excel, extract strings into a separate list
-all_strings = pd.read_excel("preli_set_AB.xlsx", sheet_name=0)
 train_df = pd.read_excel("train_AB.xlsx", sheet_name=0)
 test_df = pd.read_excel("test_AB.xlsx", sheet_name=0)
 train_strings = list(train_df[2]) 
 test_strings = list(test_df[2]) 
-
-# Define corpus, including both training and test strings
-corpus = all_strings['raw_msg'].values
 
 # Create the vectorizer
 vectorizer = CountVectorizer(stop_words='english') # Toggle with the vectorizer below to include stop words
 # vectorizer = CountVectorizer()
  
 # Transform the corpus data into vectors
-X = vectorizer.fit_transform(corpus)
+X = vectorizer.fit_transform(train_strings)
  
 # Prepare data frame for MLP model
 # Features
