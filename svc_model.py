@@ -34,6 +34,15 @@ vectorizer.fit(train_strings)
 train_vectors = vectorizer.transform(train_strings)
 test_vectors = vectorizer.transform(test_strings)
 
+# Convert target labels to binary format
+train_df[6] = train_df[6].astype('category')
+test_df[6] = test_df[6].astype('category')
+
+encode_map = {
+    'H': 1,
+    '0': 0
+}
+
 # Define X (strings in vectorized form) and y (corresponding gold-standard tags)
 X_train = train_vectors.toarray()
 X_test = test_vectors.toarray()
@@ -69,9 +78,9 @@ print()
 def evaluate(model, X_test, y_test):
     y_pred = model.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred, pos_label="H")
-    recall = recall_score(y_test, y_pred, pos_label="H")
-    f1 = f1_score(y_test, y_pred, pos_label="H")
+    precision = precision_score(y_test, y_pred, pos_label=1)
+    recall = recall_score(y_test, y_pred, pos_label=1)
+    f1 = f1_score(y_test, y_pred, pos_label=1)
     print('Accuracy: {:.2%}'.format(accuracy))
     print('Precision: {:.2%}'.format(precision), '(How many samples labelled hostile were actually hostile)')
     print('Recall: {:.2%}'.format(recall), '(How many of the hostile samples in the data set were found)')
@@ -79,7 +88,7 @@ def evaluate(model, X_test, y_test):
     print()
     print(classification_report(y_test, y_pred))
     print()
-    print(confusion_matrix(y_test, y_pred, labels=["H", "0"]))
+    print(confusion_matrix(y_test, y_pred))
     print()
 
 evaluate(svc_model, X_test, y_test)
@@ -108,17 +117,17 @@ if smoteinput == 'Y' or smoteinput == 'y':
    y_pred = svc_model.predict(X_test)
    # Evaluate accuracy, precision, recall
    accuracy = accuracy_score(y_test, y_pred)
-   precision = precision_score(y_test, y_pred, pos_label="H")
-   recall = recall_score(y_test, y_pred, pos_label="H")
-   f1_score = 2 * (precision * recall) / (precision + recall)
+   precision = precision_score(y_test, y_pred, pos_label=1)
+   recall = recall_score(y_test, y_pred, pos_label=1)
+   f1 = f1_score(y_test, y_pred, pos_label=1)
    print('Accuracy: {:.2%}'.format(accuracy))
    print('Precision: {:.2%}'.format(precision), '(How many samples labelled hostile were actually hostile)')
    print('Recall: {:.2%}'.format(recall), '(How many of the hostile samples in the data set were found)')
-   print('F1 score: {:.2%}'.format(f1_score))
+   print('F1 score: {:.2%}'.format(f1))
    print()
    print(classification_report(y_test, y_pred))
    print()
-   print(confusion_matrix(y_test, y_pred, labels=["H", "0"]))
+   print(confusion_matrix(y_test, y_pred))
    print()
 else:
    pass
@@ -129,7 +138,7 @@ else:
 svc_model.fit(X_train, y_train)
 
 # Plot coefficients in a graph to reveal most salient words
-def plot_coefficients(classifier, feature_names, top_features=20):
+def plot_coefficients(classifier, feature_names, top_features=15):
    coef = classifier.coef_.ravel()
    top_positive_coefficients = np.argsort(coef)[-top_features:]
    top_negative_coefficients = np.argsort(coef)[:top_features]
@@ -141,7 +150,7 @@ def plot_coefficients(classifier, feature_names, top_features=20):
    plt.xticks(np.arange(1, 1 + 2 * top_features), feature_names[top_coefficients], rotation=60, ha='right')
    plt.show()
 
-plotinput = input('Do you wish to plot the top 20 coefficients (most salient words)? Y/N ')
+plotinput = input('Do you wish to plot the top 15 coefficients (most salient words)? Y/N ')
 if plotinput == 'Y' or plotinput == 'y':
    plot_coefficients(svc_model, vectorizer.get_feature_names_out())
 else:
