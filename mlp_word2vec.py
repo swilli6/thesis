@@ -30,7 +30,7 @@ test_strings = list(test_df[2])
 vectorizer = CountVectorizer(stop_words='english') # Toggle with the vectorizer below to include stop words
 # vectorizer = CountVectorizer()
  
-# Transform the corpus data into vectors
+# Transform the training strings into vectors
 X = vectorizer.fit_transform(train_strings)
  
 # Prepare data frame for MLP model
