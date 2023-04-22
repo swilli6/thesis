@@ -6,7 +6,6 @@
 # Input: train_AB.xlsx and test_AB.xlsx (or train_A.xlsx and test_A.xlsx)
 # Output: performance evaluation metrics and a confusion matrix
 
-from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
 import time
 import torch
