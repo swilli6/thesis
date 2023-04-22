@@ -43,6 +43,9 @@ encode_map = {
     '0': 0
 }
 
+train_df[6].replace(encode_map, inplace=True)
+test_df[6].replace(encode_map, inplace=True)
+
 # Define X (strings in vectorized form) and y (corresponding gold-standard tags)
 X_train = train_vectors.toarray()
 X_test = test_vectors.toarray()
