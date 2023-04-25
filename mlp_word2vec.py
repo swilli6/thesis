@@ -59,7 +59,6 @@ def Text2Vec(input_data):
         for word in WordsVocab[CountVecData.iloc[i , :]>=1]:
             if word in GoogleModel.key_to_index.keys():    
                 Sentence = Sentence + GoogleModel[word]
-            # If word is not found in Word2Vec, an empty vector is stored
             else:
                 Sentence = Sentence
         # Concatenate the vector to the dataframe
