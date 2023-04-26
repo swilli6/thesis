@@ -1,8 +1,8 @@
 # Author: Salla Williams <salla.williams@gmail.com
 # Date: April 2023
 # Description: This script takes an Excel sheet of message data, tokenizes the
-#              strings, and counts the number of words per string, adding this
-#              adding this information into a new column.
+#              strings and counts the number of words per string, adding this
+#              information into a new column.
 # Input: preli_set_AB.xlsx
 # Output: word_lengths.csv
 
