@@ -3,7 +3,7 @@
 # Description: This script trains a deep neural network for binary classification
 #              on text data and evaluates performance using accuracy, precision,
 #              recall, and F1 score.
-# Input: train_AB.xlsx and test_AB.xlsx (or train_A.xlsx and test_A.xlsx)
+# Input: dummy_train.xlsx and dummy_test.xlsx
 # Output: performance evaluation metrics and a confusion matrix
 
 import pandas as pd
@@ -11,7 +11,6 @@ import time
 import torch
 import torch.nn as nn
 from sklearn.feature_selection import f_classif
-import matplotlib.pyplot as plt
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report, confusion_matrix
@@ -20,8 +19,8 @@ import gensim
 import numpy as np
 
 # Import training and test data from Excel, extract strings into a separate list
-train_df = pd.read_excel("train_AB.xlsx", sheet_name=0)
-test_df = pd.read_excel("test_AB.xlsx", sheet_name=0)
+train_df = pd.read_excel("dummy_train.xlsx", sheet_name=0)
+test_df = pd.read_excel("dummy_test", sheet_name=0)
 train_strings = list(train_df[2]) 
 test_strings = list(test_df[2]) 
 
@@ -44,7 +43,7 @@ GoogleModel = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vector
 # List the vocabulary present in the corpus matrix
 WordsVocab=CountVectorizedData.columns[:-1]
 
-# Create one vector for each sentence
+# Create a function to produce one vector for each sentence
 def Text2Vec(input_data):
     # Convert the text to numeric data
     X = vectorizer.transform(input_data)
@@ -53,14 +52,14 @@ def Text2Vec(input_data):
     W2V_Data=pd.DataFrame()
     # Loop through each row for the data
     for i in range(CountVecData.shape[0]):
-        # Initiate a sentence with all zeros
-        Sentence = np.zeros(300)
+        # Initiate a sentence vector with zeros
+        sentence = np.zeros(300)
         # Loop through each word in the sentence and store the Word2Vec vector if present
         for word in WordsVocab[CountVecData.iloc[i , :]>=1]:
             if word in GoogleModel.key_to_index.keys():    
-                Sentence = Sentence + GoogleModel[word]
+                sentence = sentence + GoogleModel[word]
             else:
-                Sentence = Sentence
+                sentence = sentence
         # Concatenate the vector to the dataframe
         W2V_Data=pd.concat([W2V_Data, pd.DataFrame([Sentence])], ignore_index=True)
     return(W2V_Data)
@@ -69,7 +68,7 @@ def Text2Vec(input_data):
 train_w2v=Text2Vec(train_strings)
 test_w2v=Text2Vec(test_strings)
 
-# Convert dataframe to Numpy array, define X_train and X_test
+# Define X_train and X_test
 X_train = train_w2v.values
 X_test = test_w2v.values
 
